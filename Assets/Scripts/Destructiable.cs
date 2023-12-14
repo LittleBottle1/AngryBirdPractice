@@ -9,11 +9,14 @@ public class Destructiable : MonoBehaviour
 
     public List<Sprite> injuredSpriteList;//ÊÜÉËµÄÍ¼Æ¬×é
     private SpriteRenderer spriteRenderer;
+
+    private GameObject boomPrefab;
     // Start is called before the first frame update
     void Start()
     {
         currentHP = maxHP;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boomPrefab = Resources.Load<GameObject>("Boom1");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,8 +38,9 @@ public class Destructiable : MonoBehaviour
         }
 
     }
-    private void Dead()
+    public virtual void Dead()
     {
+        GameObject.Instantiate(boomPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

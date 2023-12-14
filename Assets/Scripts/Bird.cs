@@ -8,7 +8,9 @@ public class Bird : MonoBehaviour
     {
         Waiting,
         BeforeShoot,
-        AfterShoot
+        AfterShoot,
+        WaitToDie
+
     }
     public BirdState state = BirdState.BeforeShoot;
 
@@ -36,7 +38,10 @@ public class Bird : MonoBehaviour
                 MoveControl();
                 break;
             case BirdState.AfterShoot:
+                StopControl();
                 break;
+            case BirdState.WaitToDie:
+                 break;
             default:
                 break;
         }
@@ -86,5 +91,27 @@ public class Bird : MonoBehaviour
         rgd.bodyType = RigidbodyType2D.Dynamic;
         rgd.velocity = (SlingShot.Instance.getCenterPosition() - transform.position).normalized * flySpeed;
         state = BirdState.AfterShoot;
+    }
+
+    public void GoStage(Vector3 position)
+    {
+        state = BirdState.BeforeShoot;
+        transform.position = position;
+    }
+
+    private void StopControl()
+    {
+        if(rgd.velocity.magnitude < 0.2f)
+        {
+            state = BirdState.WaitToDie;
+            Invoke("LoadNextBird", 1f);
+        }
+    }
+
+    private void LoadNextBird()
+    {
+        Destroy(gameObject);
+        GameObject.Instantiate(Resources.Load("Boom1"), transform.position, Quaternion.identity);
+        GameManager.Instance.LoadNextBird();
     }
 }

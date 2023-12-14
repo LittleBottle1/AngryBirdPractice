@@ -19,16 +19,18 @@ public class SlingShot : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+
         leftLineRender = transform.Find("LeftLineRender").GetComponent<LineRenderer>();
-        rightLineRender=transform.Find("RightLineRender").GetComponent <LineRenderer>();
+        rightLineRender = transform.Find("RightLineRender").GetComponent<LineRenderer>();
 
         leftPoint = transform.Find("LeftPoint");
         rightPoint = transform.Find("RightPoint");
         centerPoint = transform.Find("CenterPoint");
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+
 
         HideLine();
     }
