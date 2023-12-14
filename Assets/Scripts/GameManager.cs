@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
         birdList = FindObjectsByType<Bird>(FindObjectsSortMode.None);
         pigTotalCount = (FindObjectsByType<Pig>(FindObjectsSortMode.None)).Length;
         cameraFollowTarget = Camera.main.GetComponent<FollowTarget>();
+
+        birdList = birdList.OrderBy(obj => -obj.transform.position.x).ToArray();
 
         LoadNextBird();
     }

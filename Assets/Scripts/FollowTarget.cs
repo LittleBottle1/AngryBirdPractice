@@ -16,6 +16,11 @@ public class FollowTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (target == null || target.position == null)
+        {
+            return;
+        }
+
         Vector3 position = transform.position;
         position.x = target.position.x;
 
